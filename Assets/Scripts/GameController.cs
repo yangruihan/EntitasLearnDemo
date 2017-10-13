@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
 using Entitas;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
     private Systems _systems;
 
-	void Start () {
-        _systems = CreateSystems();
+    void Start()
+    {
+        var contexts = Contexts.sharedInstance;
+
+        _systems = CreateSystems(contexts);
 
         _systems.Initialize();
-	}
+    }
 
-    Systems CreateSystems()
+    Systems CreateSystems(Contexts contexts)
     {
         return new Feature("Game")
-            .Add(new HelloWorldInitializeSystem())
+            .Add(new InitializeHexGridSystem(contexts))
             ;
     }
 }
